@@ -1,1 +1,21 @@
-https://docs.google.com/document/d/1VfxK-wx0DROjtYaLZnLavo6Wfb5YC-MF5RYtdBrWE7k/edit
+URL: https://imgur.com/a/gPwAU8J
+
+###Infrastructure Design
+Three Servers: Each server will host a web server, application server, and a MySQL server. This redundancy ensures seamless operation even if one server encounters issues or requires maintenance.
+Firewalls: Three firewalls are integrated to enhance security. Each server has a dedicated firewall to filter and manage incoming and outgoing network traffic, scrutinizing data packets to identify and block malicious traffic.
+SSL Certificate: An SSL certificate is configured to serve www.foobar.com over HTTPS, ensuring data exchanged between users' browsers and the web server is encrypted and remains confidential.
+Monitoring Clients: Three monitoring clients are deployed to collect data related to server performance, traffic patterns, security incidents, and more. These clients send data to a central monitoring system, allowing administrators to track the infrastructure's health and respond to anomalies or issues proactively.
+
+###Specifics
+Firewalls: They are for enhanced security, filtering and managing incoming and outgoing network traffic to identify and block malicious traffic.
+HTTPS: Traffic is served over HTTPS to secure data in transit and protect user privacy, safeguarding sensitive information and preventing eavesdropping.
+Monitoring: It is used for maintaining the health and performance of the web infrastructure, allowing administrators to track server performance, traffic patterns, and security incidents proactively.
+Monitoring Tool Data Collection: The monitoring setup collects data and sends it to a central monitoring system. This includes logs, metrics, and other relevant information, which the central system aggregates and analyzes.
+Monitoring Web Server QPS: To monitor the web server's Queries Per Second (QPS), the monitoring setup can track HTTP request rates, response times, and errors. Alerts for QPS anomalies can notify administrators of unusual traffic patterns, enabling timely corrective actions.
+
+###Issues
+- Terminating SSL at the Load Balancer Level: This can expose unencrypted traffic between the load balancer and the web servers, potentially compromising data integrity and security. Ensuring end-to-end encryption is crucial.
+- Single MySQL Server for Writes: Relying on a single MySQL server for write operations poses a single point of failure. Implementing a primary replica cluster for MySQL is advisable to ensure data availability and introduce redundancy.
+- Servers with All the Same Components: Deploying servers with identical components for web, application, and database servers may lead to uneven resource consumption. Customizing resource allocation based on the specific requirements of each component is crucial for optimizing overall performance.
+
+This design addresses the requirements for security, encrypted traffic, and monitoring while considering redundancy, high availability, and load balancing. However, it's important to address the identified issues, such as ensuring end-to-end encryption, implementing a primary replica cluster for MySQL, and customizing resource allocation based on component-specific requirements, to enhance security and operational efficiency.

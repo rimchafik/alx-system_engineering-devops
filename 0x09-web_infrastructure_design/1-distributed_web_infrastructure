@@ -1,1 +1,26 @@
-https://docs.google.com/document/d/1NLR43N3ZBpyEr_CvtgV55EOm3ef6FHrofA908YQk4WE/edit
+URL: https://imgur.com/a/q4cAebZ
+
+### Infrastructure Design
+
+1. **Two Servers**: We'll have two servers to ensure redundancy and high availability. If one server fails, the other can take over, minimizing downtime.
+2. **Web Server (Nginx)**: Nginx will be used as the web server on both servers. It's efficient at handling static content and managing many concurrent connections, making it ideal for scaling web applications.
+3. **Application Server**: This server will run the application logic. It's hosted on its dedicated server to optimize performance and resource allocation.
+4. **Load Balancer (HAProxy)**: HAProxy will distribute incoming traffic between the two servers. It's adept at complex load balancing scenarios, providing fine-grained control over traffic distribution and ensuring high availability through detailed health checks and session persistence mechanisms.
+5. **Database (MySQL)**: MySQL will be used as the database, with a Master-Replica cluster setup. The Master node handles data writes, while the Replica node synchronizes data with the Master and handles read operations.
+6. **Application Files**: The code base will be stored on both servers to ensure redundancy and seamless application operation even if one server fails.
+
+### Specifics
+
+- **Why Two Servers**: Redundancy and high availability. If one server fails, the other takes over, minimizing downtime.
+- **Load Balancer Distribution Algorithm**: HAProxy uses a round-robin algorithm by default, distributing incoming requests evenly across the servers. This ensures that no single server is overloaded.
+- **Active-Active vs. Active-Passive**: The setup is more of an Active-Passive configuration. The Master (Server 1) actively handles both reads and writes, while the Replica (Server 2) acts as a passive backup, accepting only read operations.
+- **MySQL Master-Replica Cluster**: Ensures data consistency between the two servers. The Master-Replica architecture balances read and write operations effectively.
+- **Primary Node vs. Replica Node**: The Primary node (Master) handles data writes, ensuring data integrity and consistency. The Replica node (Slave) synchronizes data with the Master and handles read operations, providing redundancy and load balancing for read queries.
+
+### Issues
+
+- **Single Points of Failure (SPOF)**: The load balancer and the database Master node are potential SPOFs. If the load balancer fails, incoming traffic cannot be distributed. Similarly, if the database Master node fails, data integrity and consistency could be compromised.
+- **Security Issues**: The absence of a firewall and HTTPS exposes the infrastructure to potential security threats, such as unauthorized access and data breaches.
+- **No Monitoring**: Without monitoring, it's challenging to detect and address issues proactively, leading to potential downtime and performance degradation.
+
+This design addresses the requirements while considering redundancy, high availability, and load balancing. However, it's crucial to address the identified issues, such as adding a firewall, implementing HTTPS, and setting up monitoring, to enhance security and operational efficiency.

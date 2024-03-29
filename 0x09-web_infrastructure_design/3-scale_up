@@ -1,1 +1,18 @@
-https://docs.google.com/document/d/1SoAArUzt8NtqOg9qbJUBy8TvGZxGzN3wbPzF6fkmQfA/edit
+URL: https://imgur.com/a/mWvRG1r
+
+###Infrastructure Design
+One Server: This server will host the load balancer (HAProxy) configured as a cluster with another load balancer. This setup ensures high availability and redundancy for the load balancing layer, preventing a single point of failure.
+Load Balancer (HAProxy): HAProxy is configured as a cluster to distribute incoming traffic across multiple servers, optimizing resource usage and maximizing performance. It supports various load-balancing algorithms, such as roundrobin, leastconn, or source, to distribute the workload effectively.
+Split Components: The web server, application server, and database are each hosted on their own server. This separation of concerns allows for optimized resource allocation, improved scalability, and easier maintenance.
+
+###Specifics
+Why One Server for Load Balancer: To ensure high availability and redundancy. If one load balancer fails, the other can take over, minimizing downtime and ensuring seamless traffic distribution.
+HAProxy Cluster: The cluster configuration allows for seamless failover and load balancing across multiple servers. It ensures that all applications access the cluster via a single IP address or hostname, masking the topology of the database cluster behind HAProxy.
+Split Components: This approach enhances scalability and performance by allowing each component to be scaled independently based on its specific needs. It also simplifies maintenance and troubleshooting by isolating issues to specific components.
+
+###Issues
+Terminating SSL at the Load Balancer Level: This can expose unencrypted traffic between the load balancer and the web servers, potentially compromising data integrity and security. Ensuring end-to-end encryption is crucial.
+Single MySQL Server for Writes: Relying on a single MySQL server for write operations poses a single point of failure. Implementing a primary replica cluster for MySQL is advisable to ensure data availability and introduce redundancy.
+Servers with All the Same Components: Deploying servers with identical components for web, application, and database servers may lead to uneven resource consumption. Customizing resource allocation based on the specific requirements of each component is crucial for optimizing overall performance.
+
+This design addresses the requirements for high availability, redundancy, and optimized resource allocation while considering the specifics of each component's role. However, it's important to address the identified issues, such as ensuring end-to-end encryption, implementing a primary replica cluster for MySQL, and customizing resource allocation based on component-specific requirements, to enhance security and operational efficiency.
