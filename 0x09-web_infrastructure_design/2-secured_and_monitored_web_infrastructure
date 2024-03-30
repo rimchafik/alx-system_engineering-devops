@@ -1,4 +1,4 @@
-URL: https://imgur.com/a/gPwAU8J
+https://i.imgur.com/t33iKQB.jpg
 
 ###Infrastructure Design
 Three Servers: Each server will host a web server, application server, and a MySQL server. This redundancy ensures seamless operation even if one server encounters issues or requires maintenance.

@@ -1,4 +1,5 @@
-URL: https://imgur.com/a/mWvRG1r
+https://i.imgur.com/kqexZ40.jpg
+
 
 ###Infrastructure Design
 One Server: This server will host the load balancer (HAProxy) configured as a cluster with another load balancer. This setup ensures high availability and redundancy for the load balancing layer, preventing a single point of failure.
